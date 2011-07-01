@@ -123,7 +123,7 @@ module Devise
           attributes.delete_if { |key, value| value.blank? }
 
           if attributes.size == required_attributes.size
-            record = to_adapter.find_first(filter_auth_params(attributes))
+            record = find_for_authentication(attributes)
           end
 
           unless record
