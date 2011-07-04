@@ -112,7 +112,11 @@ module Devise
 
         # Recreate the user based on the stored cookie
         def serialize_from_cookie(id, remember_token)
-          record = to_adapter.get(id)
+          #record = to_adapter.get(id)
+          
+          # NOTE: does NOT support multi-column primary keys (supported in Rails?)
+          record = find_for_authentication({ to_adapter.klass.primary_key => id[0] })
+          
           record if record && record.rememberable_value == remember_token && !record.remember_expired?
         end
 
